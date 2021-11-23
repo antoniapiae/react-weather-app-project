@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import WeatherInfo from "./WeatherInfo";
+import WeatherForecast from "./WeatherForecast";
 import axios from "axios";
 
 import "./Weather.css";
@@ -11,6 +12,7 @@ export default function Weather(props) {
   function handleResponse(response) {
     setWeatherData({
       ready: true,
+      coordinates: response.data.coord,
       date: new Date(response.data.dt * 1000),
       description: response.data.weather[0].description,
       iconUrl: `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`,
@@ -73,6 +75,7 @@ export default function Weather(props) {
               </div>
             </form>
             <hr />
+            <WeatherForecast coordinates={weatherData.coordinates} />
             <div class="weather-forecast" id="forecast"></div>
             <small class="source">
               <a
